@@ -65,6 +65,7 @@ function onSizeDown() {
 function onRemoveLine() {
     console.log(gMeme.selectedLineIdx - 1);
     removeLine(gMeme.selectedLineIdx - 1);
+    if (gMeme.selectedLineIdx === 0) return
     gMeme.selectedLineIdx--;
     renderCanvas();
 }

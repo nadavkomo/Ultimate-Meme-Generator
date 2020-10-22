@@ -112,11 +112,6 @@ function canvasClicked(ev) {
 
 }
 
-// const currLine = getCurrLine()
-// if (line = currLine) {
-//     buildRectOnText(currLine.size, currLine.text, currLine.x, currLine.y)
-// }
-
 function renderCanvas() {
     clearCanvas()
     if (gImgs[gMeme.selectedImgId - 1].upload) {
@@ -141,18 +136,15 @@ function drawImg(imgUrl) {
     var img = new Image()
     img.src = `./${imgUrl}`;
     img.onload = () => {
-        // console.log(gCanvas);
         gCanvas.height = (img.height * gCanvas.width) / img.width;
-        // console.log(gCanvas);
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
     }
     saveToStorage('gMeme', gMeme)
 }
 
-function drawText(selectedLineIdx, x = 250, y = 100) {
+function drawText(selectedLineIdx, x = 200, y = 100) {
     const text = gMeme.lines[selectedLineIdx].text;
     const size = gMeme.lines[selectedLineIdx].size
-        // const align = gMeme.lines[selectedLineIdx].align;
     const strokeColor = gMeme.lines[selectedLineIdx].strokeColor;
     const fillColor = gMeme.lines[selectedLineIdx].fillColor;
     const font = gMeme.lines[selectedLineIdx].font
@@ -203,14 +195,6 @@ function downloadImg(elLink) {
 }
 
 
-
-
-
-
-
-
-
-
 function toMemeEditor(className) {
     const elPrevLink = document.querySelector('.active');
     elPrevLink.classList.remove('active')
@@ -220,7 +204,6 @@ function toMemeEditor(className) {
     elGallery.style.display = 'none';
     const elAbout = document.querySelector('.about')
     elAbout.style.display = 'none';
-    // renderCanvas(className.split(' ')[1])
     gMeme.selectedImgId = className.split(' ')[1]
     setBgImg(className.split(' ')[1])
     renderCanvas()

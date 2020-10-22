@@ -17,7 +17,7 @@
         <button class="toggle-menu-btn fa" onclick="toggleMenu()">≡</button>
     </section>
 
-    <section class="search-by-keyword">
+    <section class="search-by-keyword flex">
         <input type="text" name="text" placeholder="Enter keyword for search">
         <button type="submit" onclick="onFilterGalleryByKeyword()">search</button>
     </section>
@@ -37,70 +37,72 @@
 
     <div class="meme-editor">
         <div class="canvas-container flex">
-            <canvas id="my-canvas" height="476" width="700" onclick="canvasClicked(event)" onmousedown="onMoveText(event)" ontouchstart="onMoveText(event)"></canvas>
+            <canvas id="my-canvas" width="700" onclick="canvasClicked(event)" onmousedown="onMoveText(event)" ontouchstart="onMoveText(event)"></canvas>
             <!-- <canvas id="my-canvas" height="600" width="500" onmousedown="onMoveText" ontouchstart="onMoveText" onmousemove="onTextMove(event)" ontouchmove="onTextMove(event)"></canvas> -->
         </div>
 
-        <div class="box-editor flex column">
-            <label for="text-line">Text:</label>
-            <input type="text" name="text-line" id="text-line" placeholder="Enter text" />
-            <label for="text-strokeColor">StrokeColor:</label>
-            <input type="color" name="text-strokeColor" id="text-strokeColor" placeholder="Enter strokeColor" />
-            <label for="text-fillColor">FillColor:</label>
-            <input type="color" name="text-fillColor" id="text-fillColor" placeholder="Enter fillColor" />
-            <label for="text-size">Text-size:</label>
-            <input type="text" name="text-size" id="text-size" placeholder="Enter text-size" />
-            <!-- <label for="text-align">Choose align:</label>
-            <select id="text-align">
-              <option value="left">left</option>
-              <option value="center">center</option>
-              <option value="right">right</option>
-            </select> -->
-            <label for="text-font">Choose font</label>
-            <select id="text-font">
-                <option value="Ariel">Ariel</option>
-                <option value="Cambria">Cambria</option>
-                <option value="fantasy">Fantasy</option>
-            </select>
+        <div class="box-editor flex">
+            <div class="container-box-editor flex column">
+                <div class="container-editor flex">
+                    <label for="text-line">Text:</label>
+                    <input type="text" name="text-line" id="text-line" placeholder="Enter text" />
+                </div>
+                <div class="container-editor flex">
+                    <label for="text-strokeColor">StrokeColor:</label>
+                    <input type="color" name="text-strokeColor" id="text-strokeColor" placeholder="Enter strokeColor" />
+                </div>
+                <div class="container-editor flex">
+                    <label for="text-fillColor">FillColor:</label>
+                    <input type="color" name="text-fillColor" id="text-fillColor" placeholder="Enter fillColor" />
+                </div>
+                <div class="container-editor flex">
+                    <label for="text-size">Text-size:</label>
+                    <input type="text" name="text-size" id="text-size" placeholder="Enter text-size" />
+                </div>
+                <div class="container-editor flex">
+                    <label for="text-font">Choose font</label>
+                    <select id="text-font">
+                        <option value="Ariel">Ariel</option>
+                        <option value="Cambria">Cambria</option>
+                        <option value="fantasy">Fantasy</option>
+                    </select>
+                </div>
 
-            <section class="function-line flex">
-                <section class="text-move"></section>
-                <button class="moveUp" onclick="onMoveUp()">Move Up</button>
-                <button class="moveDown" onclick="onMoveDown()">Move Down</button>
-                <button class="moveLeft" onclick="onMoveLeft()">Move Left</button>
-                <button class="moveRight" onclick="onMoveRight()">Move Right</button>
-            </section>
-            <button class="removeLine" onclick="onRemoveLine()">remove</button>
-            <button class="addLine" onclick="onDrawText()">add</button>
-            <button class="selectLine" onclick="onSelectLine()">select</button>
-            </section>
-
-            <section class="tools-edit">
-                <section class="text-size flex">
-                    <button class="textUpSize" onclick="onSizeUp()">size+</button>
-                    <button class="textDownSize" onclick="onSizeDown()">size-</button>
+                <section class="container-editor position-line flex">
+                    <section class="text-move"></section>
+                    <button class="moveUp btn" onclick="onMoveUp()">⬆️</button>
+                    <button class="moveDown btn" onclick="onMoveDown()">⬇️</button>
+                    <button class="moveLeft btn" onclick="onMoveLeft()">⬅️</button>
+                    <button class="moveRight btn" onclick="onMoveRight()">➡️</button>
                 </section>
-                <section class="text-position flex"></section>
-                <button class="textLeft" onclick="onTextLeft()">left</button>
-                <button class="textCenter" onclick="onTextCenter()">center</button>
-                <button class="textRight" onclick="onTextRight()">right</button>
-            </section>
 
-            <section class="options">
-                <!-- <button><a href="#" onclick="onDownloadCanvas(this)" download="">Download</a></button> -->
-                <button class="share">SHARE</button>
-                <!-- <button class="download">DOWNLOAD</button> -->
-            </section>
+                <section class="container-editor func-line">
+                    <button class="removeLine btn" onclick="onRemoveLine()">🗑️</button>
+                    <button class="addLine btn" onclick="onDrawText()">🆕</button>
+                    <button class="selectLine btn" onclick="onSelectLine()">↕️</button>
+                </section>
 
-            <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+                <section class="container-editor tools-edit">
+                    <section class="text-size flex">
+                        <button class="textUpSize" onclick="onSizeUp()">size+</button>
+                        <button class="textDownSize" onclick="onSizeDown()">size-</button>
+                    </section>
+                    <section class="text-position flex"></section>
+                    <button class="textLeft" onclick="onTextLeft()">left</button>
+                    <button class="textCenter" onclick="onTextCenter()">center</button>
+                    <button class="textRight" onclick="onTextRight()">right</button>
+                </section>
 
-            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
-                <input name="img" id="imgData" type="hidden" />
-                <button class="btn" type="submit">Publish</button>
-                <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
-                <div class="share-container"></div>
-            </form>
-
+                <section class="container-editor options">
+                    <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                        <input name="img" id="imgData" type="hidden" />
+                        <button class="btn" type="submit">Publish</button>
+                        <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
+                        <div class="share-container"></div>
+                    </form>
+                </section>
+            </div>
 
         </div>
     </div>
