@@ -5,6 +5,14 @@ var gImgs = [
     { id: 2, url: 'img/meme-imgs (various aspect ratios)/003.jpg', keywords: ['animal'] },
     { id: 3, url: 'img/meme-imgs (various aspect ratios)/004.jpg', keywords: ['cute', 'animal'] },
     { id: 4, url: 'img/meme-imgs (various aspect ratios)/5.jpg', keywords: ['cute', 'animal'] },
+    { id: 5, url: 'img/meme-imgs (various aspect ratios)/005.jpg', keywords: ['cute', 'animal'] },
+    { id: 6, url: 'img/meme-imgs (various aspect ratios)/006.jpg', keywords: ['cute', 'animal'] },
+    { id: 7, url: 'img/meme-imgs (various aspect ratios)/8.jpg', keywords: ['cute', 'animal'] },
+    { id: 8, url: 'img/meme-imgs (various aspect ratios)/9.jpg', keywords: ['cute', 'animal'] },
+    { id: 9, url: 'img/meme-imgs (various aspect ratios)/12.jpg', keywords: ['cute', 'animal'] },
+    { id: 10, url: 'img/meme-imgs (various aspect ratios)/19.jpg', keywords: ['cute', 'animal'] },
+    { id: 11, url: 'img/meme-imgs (various aspect ratios)/putin.jpg', keywords: ['cute', 'animal'] },
+    { id: 12, url: 'img/meme-imgs (various aspect ratios)/leo.jpg', keywords: ['cute', 'animal'] },
 ];
 
 function addImg(url, keywords) {
