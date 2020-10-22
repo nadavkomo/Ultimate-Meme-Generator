@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<link>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="css/style.css"></link>
+<title>Ultimate Meme Generator</title>
+</head>
+
+
+<body onload="onInit()">
+    <section class="nav-bar">
+        <a class="logo" onclick="toGallery(this)">Logo</a>
+        <a onclick="toAbout(this)">About</a>
+        <a onclick="toGallery(this)" class="active">Gallery</a>
+        <button class="toggle-menu-btn fa" onclick="toggleMenu()">≡</button>
+    </section>
+
+
+    <div class="gallery">
+        <div class="grid-container">
+            <img class="item 1" onclick="toMemeEditor(this.className)" src="img/meme-imgs (various aspect ratios)/2.jpg">
+            <img class="item 2" onclick="toMemeEditor(this.className)" src="img/meme-imgs (various aspect ratios)/003.jpg">
+            <img class="item 3" onclick="toMemeEditor(this.className)" src="img/meme-imgs (various aspect ratios)/004.jpg">
+            <img class="item 4" onclick="toMemeEditor(this.className)" src="img/meme-imgs (various aspect ratios)/5.jpg">
+        </div>
+    </div>
+
+
+    <div class="meme-editor">
+        <div class="canvas-container flex">
+            <canvas id="my-canvas" height="476" width="700" onclick="canvasClicked(event)" onmousedown="onMoveText(event)" ontouchstart="onMoveText(event)"></canvas>
+            <!-- <canvas id="my-canvas" height="600" width="500" onmousedown="onMoveText" ontouchstart="onMoveText" onmousemove="onTextMove(event)" ontouchmove="onTextMove(event)"></canvas> -->
+        </div>
+
+        <div class="box-editor flex column">
+            <label for="text-line">Text:</label>
+            <input type="text" name="text-line" id="text-line" placeholder="Enter text" />
+            <label for="text-strokeColor">StrokeColor:</label>
+            <input type="color" name="text-strokeColor" id="text-strokeColor" placeholder="Enter strokeColor" />
+            <label for="text-fillColor">FillColor:</label>
+            <input type="color" name="text-fillColor" id="text-fillColor" placeholder="Enter fillColor" />
+            <label for="text-size">Text-size:</label>
+            <input type="text" name="text-size" id="text-size" placeholder="Enter text-size" />
+            <!-- <label for="text-align">Choose align:</label>
+            <select id="text-align">
+              <option value="left">left</option>
+              <option value="center">center</option>
+              <option value="right">right</option>
+            </select> -->
+            <label for="text-font">Choose font</label>
+            <select id="text-font">
+                <option value="Ariel">Ariel</option>
+                <option value="Cambria">Cambria</option>
+                <option value="fantasy">Fantasy</option>
+            </select>
+
+            <section class="function-line flex">
+                <section class="text-move"></section>
+                <button class="moveUp" onclick="onMoveUp()">Move Up</button>
+                <button class="moveDown" onclick="onMoveDown()">Move Down</button>
+                <button class="moveLeft" onclick="onMoveLeft()">Move Left</button>
+                <button class="moveRight" onclick="onMoveRight()">Move Right</button>
+            </section>
+            <button class="removeLine" onclick="onRemoveLine()">remove</button>
+            <button class="addLine" onclick="onDrawText()">add</button>
+            <button class="selectLine" onclick="onSelectLine()">select</button>
+            </section>
+
+            <section class="tools-edit">
+                <section class="text-size flex">
+                    <button class="textUpSize" onclick="onSizeUp()">size+</button>
+                    <button class="textDownSize" onclick="onSizeDown()">size-</button>
+                </section>
+                <section class="text-position flex"></section>
+                <button class="textLeft" onclick="onTextLeft()">left</button>
+                <button class="textCenter" onclick="onTextCenter()">center</button>
+                <button class="textRight" onclick="onTextRight()">right</button>
+            </section>
+
+            <section class="options">
+                <!-- <button><a href="#" onclick="onDownloadCanvas(this)" download="">Download</a></button> -->
+                <button class="share">SHARE</button>
+                <!-- <button class="download">DOWNLOAD</button> -->
+            </section>
+
+            <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+
+            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                <input name="img" id="imgData" type="hidden" />
+                <button class="btn" type="submit">Publish</button>
+                <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
+                <div class="share-container"></div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+    <div class="about">
+        <h1>About</h1>
+    </div>
+
+
+    <footer>
+        <p>Copyright &copy; Nadav Komornik bootcamp Coding Academy 2020.</p>
+    </footer>
+
+
+
+
+
+
+
+
+
+
+
+    <script src="js/memeUtils.js"></script>
+    <script src="js/memeStorageService.js"></script>
+    <script src="js/upload-service.js"></script>
+    <script src="js/memeService.js"></script>
+    <script src="js/memeController.js"></script>
+</body>
+
+
+</html>
