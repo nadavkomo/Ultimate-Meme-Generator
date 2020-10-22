@@ -8,7 +8,43 @@ function onInit() {
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
     init()
+    renderKeyworsMap()
 }
+
+function onFilterGalleryByKeyword() {
+    const filterKeyword = document.querySelector('.search-by-keyword input[name=text]').value;
+    const filterGallery = filterGalleryByKeyword(filterKeyword)
+    renderKeyworsMap(filterKeyword)
+    renderGallery(filterGallery);
+}
+
+function renderKeyworsMap(filterKeyword = null) {
+    for (const keyword in gKeywordRates) {
+        if (keyword === filterKeyword) {
+            gKeywordRates[keyword] += 1;
+            saveToStorage('gKeywordRates', gKeywordRates)
+        }
+    }
+    const elUl = document.querySelector('.keywords ul');
+    var strHTML = '';
+    for (const keyword in gKeywordRates) {
+        strHTML += `<li style="font-size: 2${gKeywordRates[keyword]}px"> ${keyword} </li>`
+    }
+    elUl.innerHTML = strHTML;
+}
+
+
+
+
+
+// function renderKeyworsMap() {
+//     const elUl = document.querySelector('.keywords ul');
+//     var strHTML = '';
+//     for (const keyword in gKeywordCounts) {
+//         strHTML += `<li style="font-size: 2${gKeywordCounts[keyword]}px"> ${keyword} </li>`
+//     }
+//     elUl.innerHTML = strHTML;
+// }
 
 function onSizeUp() {
     var size = +gMeme.lines[gMeme.selectedLineIdx - 1].size

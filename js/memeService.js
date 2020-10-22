@@ -1,29 +1,21 @@
 'use strict'
 
 var gImgs = [
-    { id: 1, url: 'img/meme-imgs (various aspect ratios)/2.jpg', keywords: ['funny'] },
-    { id: 2, url: 'img/meme-imgs (various aspect ratios)/003.jpg', keywords: ['animal'] },
+    { id: 1, url: 'img/meme-imgs (various aspect ratios)/2.jpg', keywords: ['caractor', 'nature'] },
+    { id: 2, url: 'img/meme-imgs (various aspect ratios)/003.jpg', keywords: ['famous'] },
     { id: 3, url: 'img/meme-imgs (various aspect ratios)/004.jpg', keywords: ['cute', 'animal'] },
-    { id: 4, url: 'img/meme-imgs (various aspect ratios)/5.jpg', keywords: ['cute', 'animal'] },
-    { id: 5, url: 'img/meme-imgs (various aspect ratios)/005.jpg', keywords: ['cute', 'animal'] },
-    { id: 6, url: 'img/meme-imgs (various aspect ratios)/006.jpg', keywords: ['cute', 'animal'] },
-    { id: 7, url: 'img/meme-imgs (various aspect ratios)/8.jpg', keywords: ['cute', 'animal'] },
-    { id: 8, url: 'img/meme-imgs (various aspect ratios)/9.jpg', keywords: ['cute', 'animal'] },
-    { id: 9, url: 'img/meme-imgs (various aspect ratios)/12.jpg', keywords: ['cute', 'animal'] },
-    { id: 10, url: 'img/meme-imgs (various aspect ratios)/19.jpg', keywords: ['cute', 'animal'] },
-    { id: 11, url: 'img/meme-imgs (various aspect ratios)/putin.jpg', keywords: ['cute', 'animal'] },
-    { id: 12, url: 'img/meme-imgs (various aspect ratios)/leo.jpg', keywords: ['cute', 'animal'] },
+    { id: 4, url: 'img/meme-imgs (various aspect ratios)/5.jpg', keywords: ['victory', 'cute'] },
+    { id: 5, url: 'img/meme-imgs (various aspect ratios)/005.jpg', keywords: ['cute', 'animal', 'sleep'] },
+    { id: 6, url: 'img/meme-imgs (various aspect ratios)/006.jpg', keywords: ['sleep', 'animal'] },
+    { id: 7, url: 'img/meme-imgs (various aspect ratios)/8.jpg', keywords: ['movie'] },
+    { id: 8, url: 'img/meme-imgs (various aspect ratios)/9.jpg', keywords: ['cute', 'funny'] },
+    { id: 9, url: 'img/meme-imgs (various aspect ratios)/12.jpg', keywords: ['famous'] },
+    { id: 10, url: 'img/meme-imgs (various aspect ratios)/19.jpg', keywords: ['yelling'] },
+    { id: 11, url: 'img/meme-imgs (various aspect ratios)/putin.jpg', keywords: ['famous'] },
+    { id: 12, url: 'img/meme-imgs (various aspect ratios)/leo.jpg', keywords: ['famous', 'movie'] },
 ];
 
-function addImg(url, keywords) {
-    gImgs.push({
-        id: gImgs.length + 1,
-        url,
-        keywords,
-        upload: true,
-    })
-}
-
+var gKeywordRates = {}
 
 var gMeme = {
     selectedImgId: 1,
@@ -35,8 +27,56 @@ function init() {
     if (loadFromStorage('gMeme')) {
         gMeme = loadFromStorage('gMeme')
     }
+    if (loadFromStorage('gKeywordRates')) {
+        gKeywordRates = loadFromStorage('gKeywordRates')
+    } else getMapImgKeywords()
+    renderGallery(gImgs)
     renderCanvas()
 }
+
+function renderGallery(imgs) {
+    const elGridContainer = document.querySelector('.grid-container');
+    var strHTML = '';
+    imgs.forEach(img => {
+        strHTML += `<img class="item ${img.id}" onclick="toMemeEditor(this.className)" src="${img.url}">`
+    })
+    elGridContainer.innerHTML = strHTML;
+}
+
+function getMapImgKeywords() {
+    gImgs.forEach(img => {
+        img.keywords.forEach(keyword => {
+            gKeywordRates[keyword] = 0;
+        })
+    })
+}
+
+function filterGalleryByKeyword(filterKeyword) {
+    var filterGallery = [];
+    gImgs.forEach(img => {
+        if (img.keywords.find(keyword => keyword === filterKeyword)) {
+            filterGallery.push(img);
+        }
+    })
+    return filterGallery;
+}
+
+
+
+
+
+
+
+
+function addImg(url, keywords) {
+    gImgs.push({
+        id: gImgs.length + 1,
+        url,
+        keywords,
+        upload: true,
+    })
+}
+
 
 function removeLine(idxLine) {
     gMeme.lines.splice(idxLine, 1)

@@ -123,6 +123,15 @@ a:hover {
     }
 }
 
+.keywords {
+    display: inline;
+}
+
+.keywords li {
+    display: inline;
+    font-size: 20px;
+}
+
 .gallery {
     display: block;
 }
