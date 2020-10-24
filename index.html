@@ -12,11 +12,10 @@
 <body onload="onInit()">
     <section class="nav-bar">
         <a class="logo" onclick="toGallery(this)">Logo</a>
-        <a onclick="toAbout(this)">About</a>
+        <a onclick="toMyGallery(this)">my-gallery</a>
         <a onclick="toGallery(this)" class="active">Gallery</a>
         <button class="toggle-menu-btn fa" onclick="toggleMenu()">≡</button>
     </section>
-
 
 
     <div class="gallery">
@@ -37,8 +36,7 @@
 
     <div class="meme-editor">
         <div class="canvas-container flex">
-            <canvas id="my-canvas" width="700" onclick="canvasClicked(event)" onmousedown="onMoveText(event)" ontouchstart="onMoveText(event)"></canvas>
-            <!-- <canvas id="my-canvas" height="600" width="500" onmousedown="onMoveText" ontouchstart="onMoveText" onmousemove="onTextMove(event)" ontouchmove="onTextMove(event)"></canvas> -->
+            <canvas id="my-canvas" width="700" onclick="canvasClicked(event)" onmousemove="onMoveText(event)" ontouchmove="onMoveText(event)"></canvas>
         </div>
 
         <div class="box-editor flex">
@@ -94,7 +92,10 @@
                 </section>
 
                 <section class="container-editor options">
-                    <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+                    <section class="options1">
+                        <button class="save" onclick="onSaveToMemeGallery(event)">save</button>
+                        <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+                    </section>
                     <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                         <input name="img" id="imgData" type="hidden" />
                         <button class="btn" type="submit">Publish</button>
@@ -108,8 +109,11 @@
     </div>
 
 
-    <div class="about">
-        <h1>About</h1>
+    <div class="my-gallery">
+        <h1>my-gallery</h1>
+        <div class="grid-container-my-gallery">
+        </div>
+
     </div>
 
 

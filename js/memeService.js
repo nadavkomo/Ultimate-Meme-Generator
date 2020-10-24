@@ -95,13 +95,20 @@ function clearCanvas() {
 }
 
 function canvasClicked(ev) {
-    const { offsetX, offsetY } = ev;
+    console.log('click');
+    var { offsetX, offsetY } = ev;
+    if (ev.type === 'touchmove') {
+        var bcr = e.target.getBoundingClientRect();
+        offsetX = e.targetTouches[gMeme.selectedLineIdx - 1].clientX - bcr.x;
+        offsetY = e.targetTouches[gMeme.selectedLineIdx - 1].clientY - bcr.y;
+    }
     const clickedLine = gMeme.lines.forEach((line, idx) => {
         var lineHeight = +line.size * 1.286;
         var lineWidth = gCtx.measureText(line.text).width;
         if (offsetX > line.x && offsetX < line.x + lineWidth && offsetY > line.y && offsetY < line.y + lineHeight) {
             renderCanvas()
             gMeme.selectedLineIdx = idx + 1
+            console.log(gMeme.selectedLineIdx);
             console.log(gMeme);
             setTimeout(function() {
                 buildRectOnText(line.size, line.text, line.x, line.y);
@@ -202,8 +209,8 @@ function toMemeEditor(className) {
     elEditor.style.display = 'flex';
     const elGallery = document.querySelector('.gallery')
     elGallery.style.display = 'none';
-    const elAbout = document.querySelector('.about')
-    elAbout.style.display = 'none';
+    const elMyGallery = document.querySelector('.my-gallery')
+    elMyGallery.style.display = 'none';
     gMeme.selectedImgId = className.split(' ')[1]
     setBgImg(className.split(' ')[1])
     renderCanvas()
@@ -217,12 +224,12 @@ function toGallery(elLink) {
     elGallery.style.display = 'block';
     const elEditor = document.querySelector('.meme-editor')
     elEditor.style.display = 'none';
-    const elAbout = document.querySelector('.about')
-    elAbout.style.display = 'none';
+    const elMyGallery = document.querySelector('.my-gallery')
+    elMyGallery.style.display = 'none';
 
 }
 
-function toAbout(elLink) {
+function toMyGallery(elLink) {
     const elPrevLink = document.querySelector('.active');
     if (elPrevLink) elPrevLink.classList.remove('active')
     elLink.classList.add('active');
@@ -230,6 +237,7 @@ function toAbout(elLink) {
     elEditor.style.display = 'none';
     const elGallery = document.querySelector('.gallery')
     elGallery.style.display = 'none';
-    const elAbout = document.querySelector('.about')
-    elAbout.style.display = 'block';
+    const elMyGallery = document.querySelector('.my-gallery')
+    elMyGallery.style.display = 'block';
+    renderMyGallery()
 }

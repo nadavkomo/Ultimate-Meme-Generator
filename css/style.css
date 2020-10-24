@@ -156,8 +156,6 @@ a:hover {
     grid-column-gap: 5px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-auto-rows: 250px;
-    /* align-content: center;
-    justify-content: center; */
 }
 
 img {
@@ -217,6 +215,11 @@ canvas {
     cursor: pointer;
 }
 
+.options1 {
+    display: flex;
+    flex-direction: column;
+}
+
 @media (max-width: 1000px) {
     .meme-editor {
         width: 100%;
@@ -237,12 +240,22 @@ canvas {
     } */
 }
 
-.about {
+.my-gallery {
     display: none;
 }
 
+.grid-container-my-gallery {
+    display: grid;
+    padding: 10px;
+    height: 100%;
+    grid-row-gap: 10px;
+    grid-column-gap: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-auto-rows: 250px;
+}
+
 footer {
-    position: static;
+    position: absolute;
     width: 100%;
     height: 37px;
     left: 0;

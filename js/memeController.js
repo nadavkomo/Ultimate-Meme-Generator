@@ -1,5 +1,7 @@
 'use strict'
 
+var gMyGallery = [];
+
 var gCanvas;
 var gCtx;
 
@@ -176,13 +178,14 @@ var gNotFocus = false;
 function onMoveText(e) {
     e.preventDefault();
     if (e.buttons === 0) return
-    console.log(e);
+    console.log('move');
     var offsetX = e.offsetX
     var offsetY = e.offsetY
     if (e.type === 'touchmove') {
         var bcr = e.target.getBoundingClientRect();
         offsetX = e.targetTouches[0].clientX - bcr.x;
         offsetY = e.targetTouches[0].clientY - bcr.y;
+        console.log('offsetX', offsetX, 'offsetY', offsetX);
     }
     const line = gMeme.lines.find((line) => {
         var lineHeight = +line.size * 1.286;
@@ -190,10 +193,27 @@ function onMoveText(e) {
         return (offsetX > line.x && offsetX < line.x + lineWidth && offsetY > line.y && offsetY < line.y + lineHeight)
     })
     if (line) return
-    drawText(gMeme.selectedLineIdx - 1, offsetX - 50, offsetY - 50);
+    drawText(gMeme.selectedLineIdx - 1, offsetX, offsetY);
     renderCanvas();
 }
 
+function onSaveToMemeGallery(ev) {
+    ev.preventDefault();
+    console.log(gCanvas.toDataURL("image/jpeg"));
+    gMyGallery.push(gCanvas.toDataURL("image/jpeg"))
+    saveToStorage('gMyGallery', gMyGallery)
+}
+
+function renderMyGallery() {
+    gMyGallery = loadFromStorage('gMyGallery')
+    if (!gMyGallery) return
+    var strHTML = '';
+    gMyGallery.forEach(img => {
+        strHTML += `<img src="${img}">`
+    })
+    const elMyGallery = document.querySelector('.grid-container-my-gallery')
+    elMyGallery.innerHTML = strHTML;
+}
 
 
 
