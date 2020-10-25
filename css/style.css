@@ -242,6 +242,7 @@ canvas {
 
 .my-gallery {
     display: none;
+    height: 100vh;
 }
 
 .grid-container-my-gallery {
