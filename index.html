@@ -10,112 +10,109 @@
 
 
 <body onload="onInit()">
-    <section class="nav-bar">
-        <a class="logo" onclick="toGallery(this)">Logo</a>
-        <a onclick="toMyGallery(this)">my-gallery</a>
-        <a onclick="toGallery(this)" class="active">Gallery</a>
-        <button class="toggle-menu-btn fa" onclick="toggleMenu()">≡</button>
-    </section>
-
-
-    <div class="gallery">
-        <section class="keyword-search"></section>
-        <section class="search-by-keyword flex">
-            <input type="text" name="text" placeholder="Enter keyword for search">
-            <button type="submit" onclick="onFilterGalleryByKeyword()">search</button>
+    <header>
+        <section class="nav-bar">
+            <a class="logo" onclick="toGallery(this)">Logo</a>
+            <a onclick="toMyGallery(this)">my-gallery</a>
+            <a onclick="toGallery(this)" class="active">Gallery</a>
+            <button class="toggle-menu-btn fa" onclick="toggleMenu()">≡</button>
         </section>
-        <section class="keywords">
-            <ul>
-            </ul>
-        </section>
+    </header>
 
-        <div class="grid-container">
-        </div>
-    </div>
+    <main>
+        <div class="gallery">
+            <section class="keyword-search flex">
+                <section class="search-by-keyword">
+                    <input type="text" name="text" placeholder="Enter keyword for search">
+                    <button type="submit" onclick="onFilterGalleryByKeyword()">🔍</button>
+                </section>
+                <section class="keywords">
+                    <ul>
+                    </ul>
+                </section>
+            </section>
 
-
-    <div class="meme-editor">
-        <div class="canvas-container flex">
-            <canvas id="my-canvas" width="700" onclick="canvasClicked(event)" onmousemove="onMoveText(event)" ontouchmove="onMoveText(event)"></canvas>
+            <div class="grid-container">
+            </div>
         </div>
 
-        <div class="box-editor flex">
-            <div class="container-box-editor flex column">
-                <div class="container-editor flex">
+        <div class="meme-editor">
+            <div class="canvas-container flex">
+                <canvas id="my-canvas" width="700" onmousedown="onCanvasClicked(event)" ontouchstart="onCanvasTouched(event)" onmousemove="onMoveText(event)" ontouchmove="onMoveText(event)"></canvas>
+            </div>
+
+            <div class="box-editor flex column">
+                <section class="text flex column">
                     <label for="text-line">Text:</label>
                     <input type="text" name="text-line" id="text-line" placeholder="Enter text" />
-                </div>
-                <div class="container-editor flex">
-                    <label for="text-strokeColor">StrokeColor:</label>
-                    <input type="color" name="text-strokeColor" id="text-strokeColor" placeholder="Enter strokeColor" />
-                </div>
-                <div class="container-editor flex">
-                    <label for="text-fillColor">FillColor:</label>
-                    <input type="color" name="text-fillColor" id="text-fillColor" placeholder="Enter fillColor" />
-                </div>
-                <div class="container-editor flex">
+                </section>
+                <section class="tools1 flex">
+                    <section class="strokeColor flex">
+                        <label for="text-strokeColor">StrokeColor:</label>
+                        <input type="color" name="text-strokeColor" id="text-strokeColor" placeholder="Enter strokeColor" />
+                    </section>
+                    <section class="fillColor flex">
+                        <label for="text-fillColor">FillColor:</label>
+                        <input type="color" name="text-fillColor" id="text-fillColor" placeholder="Enter fillColor" />
+                    </section>
+                </section>
+                <section class="tools2 flex column">
                     <label for="text-size">Text-size:</label>
                     <input type="text" name="text-size" id="text-size" placeholder="Enter text-size" />
-                </div>
-                <div class="container-editor flex">
                     <label for="text-font">Choose font</label>
                     <select id="text-font">
                         <option value="Ariel">Ariel</option>
                         <option value="Cambria">Cambria</option>
                         <option value="fantasy">Fantasy</option>
                     </select>
-                </div>
-
-                <section class="container-editor position-line flex">
-                    <section class="text-move"></section>
+                </section>
+                </section>
+                <section class="text-move flex">
                     <button class="moveUp btn" onclick="onMoveUp()">⬆️</button>
                     <button class="moveDown btn" onclick="onMoveDown()">⬇️</button>
                     <button class="moveLeft btn" onclick="onMoveLeft()">⬅️</button>
                     <button class="moveRight btn" onclick="onMoveRight()">➡️</button>
                 </section>
-
-                <section class="container-editor func-line">
+                <section class="options1 flex">
                     <button class="removeLine btn" onclick="onRemoveLine()">🗑️</button>
-                    <button class="addLine btn" onclick="onDrawText()">🆕</button>
-                    <button class="selectLine btn" onclick="onSelectLine()">↕️</button>
+                    <button class="selectLine btn" onclick="onSelectLine()">⇅</button>
                 </section>
-
-                <section class="container-editor tools-edit">
-                    <section class="text-size flex">
-                        <button class="textUpSize" onclick="onSizeUp()">size+</button>
-                        <button class="textDownSize" onclick="onSizeDown()">size-</button>
-                    </section>
-                    <section class="text-position flex"></section>
+                <section class="option2 flex">
+                    <button class="addLine btn" onclick="onDrawText()">✅</button>
+                    <button class="updateLine btn" onclick="onUpdateText()">Update</button>
+                </section>
+                <section class="text-size flex">
+                    <button class="textUpSize" onclick="onSizeUp()">size+</button>
+                    <button class="textDownSize" onclick="onSizeDown()">size-</button>
+                </section>
+                <section class="position flex">
                     <button class="textLeft" onclick="onTextLeft()">left</button>
                     <button class="textCenter" onclick="onTextCenter()">center</button>
                     <button class="textRight" onclick="onTextRight()">right</button>
                 </section>
-
-                <section class="container-editor options">
-                    <section class="options1">
+                <section class="options3 flex column">
+                    <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+                    <form class="form flex" action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                        <section class="flex column">
+                            <input name="img" id="imgData" type="hidden" />
+                            <button class="btn" type="submit">Publish</button>
+                            <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
+                            <div class="share-container"></div>
+                        </section>
                         <button class="save" onclick="onSaveToMemeGallery(event)">save</button>
-                        <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
-                    </section>
-                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
-                        <input name="img" id="imgData" type="hidden" />
-                        <button class="btn" type="submit">Publish</button>
-                        <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
-                        <div class="share-container"></div>
                     </form>
                 </section>
+
+            </div>
+        </div>
+
+        <div class="my-gallery">
+            <h1>my-gallery</h1>
+            <div class="grid-container-my-gallery">
             </div>
 
         </div>
-    </div>
-
-
-    <div class="my-gallery">
-        <h1>my-gallery</h1>
-        <div class="grid-container-my-gallery">
-        </div>
-
-    </div>
-
+    </main>
 
     <footer>
         <p>Copyright &copy; Nadav Komornik bootcamp Coding Academy 2020.</p>

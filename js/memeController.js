@@ -11,6 +11,8 @@ function onInit() {
     gCtx = gCanvas.getContext('2d');
     init()
     renderKeyworsMap()
+    renderGallery(gImgs)
+    renderCanvas()
 }
 
 function onFilterGalleryByKeyword() {
@@ -35,8 +37,19 @@ function renderKeyworsMap(filterKeyword = null) {
     elUl.innerHTML = strHTML;
 }
 
-
-
+function renderCanvas() {
+    clearCanvas()
+    if (gImgs[gMeme.selectedImgId - 1].upload) {
+        gCtx.drawImage(gImgs[gMeme.selectedImgId - 1].url, 0, 0);
+    } else {
+        setBgImg(gMeme.selectedImgId)
+    }
+    setTimeout(function() {
+        gMeme.lines.forEach((line, idx) => {
+            drawText(idx, line.x, line.y)
+        })
+    }, 100)
+}
 
 
 // function renderKeyworsMap() {
@@ -94,17 +107,17 @@ function onMoveRight() {
 }
 
 function onTextLeft() {
-    gMeme.lines[gMeme.selectedLineIdx - 1].x = 100
+    gMeme.lines[gMeme.selectedLineIdx - 1].x = 0
     renderCanvas()
 }
 
 function onTextCenter() {
-    gMeme.lines[gMeme.selectedLineIdx - 1].x = 200
+    gMeme.lines[gMeme.selectedLineIdx - 1].x = gCanvas.getBoundingClientRect().width / 2 - gCtx.measureText(getCurrLine().text).width / 2;
     renderCanvas()
 }
 
 function onTextRight() {
-    gMeme.lines[gMeme.selectedLineIdx - 1].x = 300
+    gMeme.lines[gMeme.selectedLineIdx - 1].x = gCanvas.getBoundingClientRect().width - gCtx.measureText(getCurrLine().text).width;
     renderCanvas()
 }
 
@@ -135,7 +148,13 @@ function onSelectLine() {
     })
 }
 
-
+function onUpdateText() {
+    const elText = document.querySelector(' input[name=text-line]')
+    getCurrLine().text = elText.value;
+    const elFont = document.querySelector(' #text-font')
+    getCurrLine().font = elFont.value
+    renderCanvas()
+}
 
 function onDrawText() {
     gMeme.selectedLineIdx = gMeme.lines.length
@@ -148,44 +167,84 @@ function onDrawText() {
     gMeme.lines[gMeme.selectedLineIdx]['strokeColor'] = strokeColor;
     const fillColor = document.querySelector('.box-editor input[name=text-fillColor]').value;
     gMeme.lines[gMeme.selectedLineIdx]['fillColor'] = fillColor;
-    // const align = document.querySelector('.box-editor select[id=text-align]').value
-    // gMeme.lines[gMeme.selectedLineIdx]['align'] = align;
     const font = document.querySelector('.box-editor select[id=text-font]').value
     gMeme.lines[gMeme.selectedLineIdx]['font'] = font;
     drawText(gMeme.selectedLineIdx)
     gMeme.selectedLineIdx++;
-    // renderCanvas()
     saveToStorage('gMeme', gMeme)
-        // renderCanvas()
 }
 
+function onCanvasTouched(ev) {
+    const ratioX = 702 / gCanvas.getBoundingClientRect().width;
+    const ratioY = 467 / gCanvas.getBoundingClientRect().height;
+    console.log('ratioX', ratioX);
+    console.log('ratioY', ratioY);
+    var bcr = ev.target.getBoundingClientRect();
+    var offsetX = ev.targetTouches[0].clientX - bcr.x;
+    offsetX *= ratioX
+    var offsetY = ev.targetTouches[0].clientY - bcr.y;
+    offsetY *= ratioY
+    console.log('offsetX', offsetX);
+    console.log('offsetY', offsetY);
+    gMeme.lines.forEach((line, idx) => {
+        var lineHeight = +line.size * 1.286;
+        var lineWidth = gCtx.measureText(line.text).width;
+        console.log(offsetX > line.x);
+        console.log(offsetX < line.x + lineWidth);
+        console.log(offsetY > line.y);
+        console.log(offsetY < line.y + lineHeight);
+        if (offsetX > line.x && offsetX < line.x + lineWidth && offsetY > line.y && offsetY < line.y + lineHeight) {
+            renderCanvas()
+            gMeme.selectedLineIdx = idx + 1
+            setTimeout(function() {
+                buildRectOnText(line.size, line.text, line.x, line.y);
+            }, 100)
+        }
+    })
+}
 
-// function onTextMove(e) {
-//     e.preventDefault();
-//     if (e.buttons === 0) return
-//     console.log(e);
-//     var offsetX = e.offsetX
-//     var offsetY = e.offsetY
-//     if (e.type === 'touchmove') {
-//         var bcr = e.target.getBoundingClientRect();
-//         offsetX = e.targetTouches[0].clientX - bcr.x;
-//         offsetY = e.targetTouches[0].clientY - bcr.y;
-//     }
-//     setInterval(drawText(0, offsetX, offsetY), 1000)
-// }
-var gNotFocus = false;
+function onCanvasClicked(ev) {
+    var { offsetX, offsetY } = ev;
+    console.log('offsetX', offsetX);
+    console.log('offsetY', offsetY);
+    if (ev.type === 'touchstart') {
+        const ratioX = gCanvas.getBoundingClientRect().width / 702;
+        const ratioY = gCanvas.getBoundingClientRect().height / 467;
+        console.log('check');
+        var bcr = ev.target.getBoundingClientRect();
+        offsetX = ev.targetTouches[0].clientX - bcr.x;
+        offsetX *= ratioX
+        offsetY = ev.targetTouches[0].clientY - bcr.y;
+        offsetY *= ratioY
+    }
+    gMeme.lines.forEach((line, idx) => {
+        var lineHeight = +line.size * 1.286;
+        var lineWidth = gCtx.measureText(line.text).width;
+        console.log(offsetX > line.x && offsetX < line.x + lineWidth && offsetY > line.y && offsetY < line.y + lineHeight);
+        if (offsetX > line.x && offsetX < line.x + lineWidth && offsetY > line.y && offsetY < line.y + lineHeight) {
+            renderCanvas()
+            gMeme.selectedLineIdx = idx + 1
+            setTimeout(function() {
+                buildRectOnText(line.size, line.text, line.x, line.y);
+                // return line;
+            }, 100)
+        }
+    })
+}
 
 function onMoveText(e) {
     e.preventDefault();
     if (e.buttons === 0) return
-    console.log('move');
     var offsetX = e.offsetX
     var offsetY = e.offsetY
     if (e.type === 'touchmove') {
         var bcr = e.target.getBoundingClientRect();
         offsetX = e.targetTouches[0].clientX - bcr.x;
         offsetY = e.targetTouches[0].clientY - bcr.y;
-        console.log('offsetX', offsetX, 'offsetY', offsetX);
+        const ratioX = 702 / gCanvas.getBoundingClientRect().width;
+        const ratioY = 467 / gCanvas.getBoundingClientRect().height;
+        offsetX *= ratioX
+        offsetY *= ratioY
     }
     const line = gMeme.lines.find((line) => {
         var lineHeight = +line.size * 1.286;
@@ -208,27 +267,12 @@ function renderMyGallery() {
     gMyGallery = loadFromStorage('gMyGallery')
     if (!gMyGallery) return
     var strHTML = '';
-    gMyGallery.forEach(img => {
-        strHTML += `<img src="${img}">`
+    gMyGallery.forEach((img, idx) => {
+        strHTML += `<img onclick="hi(this.src)" src="${img}">`
     })
     const elMyGallery = document.querySelector('.grid-container-my-gallery')
     elMyGallery.innerHTML = strHTML;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function toggleMenu() {
     var elNavBar = document.querySelector('.nav-bar');
@@ -238,3 +282,18 @@ function toggleMenu() {
         elNavBar.className = "nav-bar";
     }
 }
+
+
+// function onTextMove(e) {
+//     e.preventDefault();
+//     if (e.buttons === 0) return
+//     console.log(e);
+//     var offsetX = e.offsetX
+//     var offsetY = e.offsetY
+//     if (e.type === 'touchmove') {
+//         var bcr = e.target.getBoundingClientRect();
+//         offsetX = e.targetTouches[0].clientX - bcr.x;
+//         offsetY = e.targetTouches[0].clientY - bcr.y;
+//     }
+//     setInterval(drawText(0, offsetX, offsetY), 1000)
+// }

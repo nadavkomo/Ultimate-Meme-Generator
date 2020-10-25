@@ -30,8 +30,7 @@ function init() {
     if (loadFromStorage('gKeywordRates')) {
         gKeywordRates = loadFromStorage('gKeywordRates')
     } else getMapImgKeywords()
-    renderGallery(gImgs)
-    renderCanvas()
+
 }
 
 function renderGallery(imgs) {
@@ -61,13 +60,6 @@ function filterGalleryByKeyword(filterKeyword) {
     return filterGallery;
 }
 
-
-
-
-
-
-
-
 function addImg(url, keywords) {
     gImgs.push({
         id: gImgs.length + 1,
@@ -76,7 +68,6 @@ function addImg(url, keywords) {
         upload: true,
     })
 }
-
 
 function removeLine(idxLine) {
     gMeme.lines.splice(idxLine, 1)
@@ -93,46 +84,6 @@ function getCurrLine() {
 function clearCanvas() {
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
 }
-
-function canvasClicked(ev) {
-    console.log('click');
-    var { offsetX, offsetY } = ev;
-    if (ev.type === 'touchmove') {
-        var bcr = e.target.getBoundingClientRect();
-        offsetX = e.targetTouches[gMeme.selectedLineIdx - 1].clientX - bcr.x;
-        offsetY = e.targetTouches[gMeme.selectedLineIdx - 1].clientY - bcr.y;
-    }
-    const clickedLine = gMeme.lines.forEach((line, idx) => {
-        var lineHeight = +line.size * 1.286;
-        var lineWidth = gCtx.measureText(line.text).width;
-        if (offsetX > line.x && offsetX < line.x + lineWidth && offsetY > line.y && offsetY < line.y + lineHeight) {
-            renderCanvas()
-            gMeme.selectedLineIdx = idx + 1
-            console.log(gMeme.selectedLineIdx);
-            console.log(gMeme);
-            setTimeout(function() {
-                buildRectOnText(line.size, line.text, line.x, line.y);
-                return line;
-            }, 100)
-        }
-    })
-
-}
-
-function renderCanvas() {
-    clearCanvas()
-    if (gImgs[gMeme.selectedImgId - 1].upload) {
-        gCtx.drawImage(gImgs[gMeme.selectedImgId - 1].url, 0, 0);
-    } else {
-        setBgImg(gMeme.selectedImgId)
-    }
-    setTimeout(function() {
-        gMeme.lines.forEach((line, idx) => {
-            drawText(idx, line.x, line.y)
-        })
-    }, 100)
-}
-
 
 function setBgImg(imgId) {
     const currImg = getImgById(+imgId)
@@ -241,3 +192,18 @@ function toMyGallery(elLink) {
     elMyGallery.style.display = 'block';
     renderMyGallery()
 }
+
+
+function hi(imgUrl) {
+    var img = new Image()
+    img.src = `./${imgUrl}`;
+    gCtx.drawImage(img, 0, 0)
+    renderCanvas()
+}
+
+// function uploadMyGallertBg()
+//     gCanvas.height = (img.height * gCanvas.width) / img.width;
+//     gCtx.drawImage(img, 0, 0);
+//     renderCanvas()
+
+// }
