@@ -52,11 +52,15 @@ function getMapImgKeywords() {
 
 function filterGalleryByKeyword(filterKeyword) {
     var filterGallery = [];
-    gImgs.forEach(img => {
-        if (img.keywords.find(keyword => keyword === filterKeyword)) {
-            filterGallery.push(img);
-        }
-    })
+    if (!filterKeyword) {
+        filterGallery = gImgs
+    } else {
+        gImgs.forEach(img => {
+            if (img.keywords.find(keyword => keyword.includes(filterKeyword))) {
+                filterGallery.push(img);
+            }
+        })
+    }
     return filterGallery;
 }
 
