@@ -254,6 +254,12 @@ select {
     padding: 20px 40px;
 }
 
+.box-editor label:hover,
+.box-editor input:hover,
+.box-editor select:hover {
+    cursor: pointer;
+}
+
 .box-editor button {
     margin: 3px;
     text-align: center;
