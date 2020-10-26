@@ -32,7 +32,8 @@ function renderKeyworsMap(filterKeyword = null) {
     const elUl = document.querySelector('.keywords ul');
     var strHTML = '';
     for (const keyword in gKeywordRates) {
-        strHTML += `<li style="font-size: 2${gKeywordRates[keyword]}px"> ${keyword} </li>`
+        const fontSize = gKeywordRates[keyword] * 1.5 + 14;
+        strHTML += `<li style="font-size: ${fontSize}px"> ${keyword} </li>`
     }
     elUl.innerHTML = strHTML;
 }
@@ -198,7 +199,7 @@ function onCanvasTouched(ev) {
             gMeme.selectedLineIdx = idx + 1
             setTimeout(function() {
                 buildRectOnText(line.size, line.text, line.x, line.y);
-            }, 100)
+            }, 200)
         }
     })
 }
@@ -227,7 +228,7 @@ function onCanvasClicked(ev) {
             setTimeout(function() {
                 buildRectOnText(line.size, line.text, line.x, line.y);
                 // return line;
-            }, 100)
+            }, 200)
         }
     })
 }

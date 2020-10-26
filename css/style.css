@@ -35,7 +35,6 @@ h1 {
 
 .nav-bar {
     overflow: hidden;
-    /* height: 73px; */
     height: 100%;
     border-radius: 37px;
     background-image: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
@@ -74,6 +73,7 @@ a:hover {
     font-weight: 500;
     border-radius: 20px;
     padding: 0 10px 2px;
+    text-transform: capitalize;
 }
 
 .nav-bar a:first-child {
@@ -279,6 +279,10 @@ select {
     align-items: center;
 }
 
+.tools2 select {
+    height: 30px;
+}
+
 .text-move button,
 .options1 button {
     width: 40px;
@@ -324,9 +328,6 @@ select {
         align-items: center;
         margin-top: 30px;
     }
-    /* canvas {
-        width: 100%;
-    } */
 }
 
 .my-gallery {
